@@ -23,8 +23,8 @@ class puppetrepo (
 
     if $::osfamily == 'RedHat' and $::operatingsystem !~ /Fedora|Amazon/ {
 
-        yumrepo { 'puppetlabs-pc1':
-            descr          => "Puppet Labs PC1 Repository el ${::os_maj_version} - \$basearch",
+        yumrepo { 'puppet5':
+            descr          => "Puppet 5 Repository el ${::os_maj_version} - \$basearch",
             baseurl        => $puppetrepo_baseurl,
             enabled        => $puppetrepo_enabled,
             failovermethod => $puppetrepo_failovermethod,
@@ -33,8 +33,8 @@ class puppetrepo (
             priority       => $puppetrepo_priority,
         }
 
-        yumrepo { 'puppetlabs-pc1-source':
-            descr          => "Puppet Labs PC1 Repository el ${::os_maj_version} - Source",
+        yumrepo { 'puppet5-source':
+            descr          => "Puppet 5 Repository el ${::os_maj_version} - Source",
             baseurl        => $puppetrepo_source_baseurl,
             enabled        => $puppetrepo_source_enabled,
             failovermethod => $puppetrepo_source_failovermethod,
@@ -43,16 +43,16 @@ class puppetrepo (
             priority       => $puppetrepo_source_priority,
         }
 
-        file { '/etc/pki/rpm-gpg/RPM-GPG-KEY-puppet-PC1':
+        file { '/etc/pki/rpm-gpg/RPM-GPG-KEY-puppet5':
             ensure => present,
             owner  => 'root',
             group  => 'root',
             mode   => '0644',
-            source => 'puppet:///modules/puppetrepo/RPM-GPG-KEY-puppet-PC1',
+            source => 'puppet:///modules/puppetrepo/RPM-GPG-KEY-puppet5',
         }
 
-        puppetrepo::rpm_gpg_key { 'RPM-GPG-KEY-puppet-PC1':
-            path   => '/etc/pki/rpm-gpg/RPM-GPG-KEY-puppet-PC1',
+        puppetrepo::rpm_gpg_key { 'RPM-GPG-KEY-puppet5':
+            path   => '/etc/pki/rpm-gpg/RPM-GPG-KEY-puppet5',
         }
 
     } else {
