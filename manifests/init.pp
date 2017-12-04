@@ -24,7 +24,7 @@ class puppetrepo (
     if $::osfamily == 'RedHat' and $::operatingsystem !~ /Fedora|Amazon/ {
 
         yumrepo { 'puppet5':
-            descr          => "Puppet 5 Repository el ${::os_maj_version} - \$basearch",
+            descr          => "Puppet 5 Repository el ${::operatingsystemmajrelease} - \$basearch",
             baseurl        => $puppetrepo_baseurl,
             enabled        => $puppetrepo_enabled,
             failovermethod => $puppetrepo_failovermethod,
@@ -34,7 +34,7 @@ class puppetrepo (
         }
 
         yumrepo { 'puppet5-source':
-            descr          => "Puppet 5 Repository el ${::os_maj_version} - Source",
+            descr          => "Puppet 5 Repository el ${::operatingsystemmajrelease} - Source",
             baseurl        => $puppetrepo_source_baseurl,
             enabled        => $puppetrepo_source_enabled,
             failovermethod => $puppetrepo_source_failovermethod,
