@@ -1,7 +1,7 @@
 #
 # Class puppetrepo
 #
-# Sets up Puppet Labs PC1 Repositories
+# Sets up Puppet Labs Repositories
 #
 class puppetrepo (
 
@@ -23,8 +23,8 @@ class puppetrepo (
 
     if $::osfamily == 'RedHat' and $::operatingsystem !~ /Fedora|Amazon/ {
 
-        yumrepo { 'puppet5':
-            descr          => "Puppet 5 Repository el ${::operatingsystemmajrelease} - \$basearch",
+        yumrepo { 'puppet':
+            descr          => "Puppet Repository el ${::operatingsystemmajrelease} - \$basearch",
             baseurl        => $puppetrepo_baseurl,
             enabled        => $puppetrepo_enabled,
             failovermethod => $puppetrepo_failovermethod,
@@ -33,8 +33,8 @@ class puppetrepo (
             priority       => $puppetrepo_priority,
         }
 
-        yumrepo { 'puppet5-source':
-            descr          => "Puppet 5 Repository el ${::operatingsystemmajrelease} - Source",
+        yumrepo { 'puppet-source':
+            descr          => "Puppet Repository el ${::operatingsystemmajrelease} - Source",
             baseurl        => $puppetrepo_source_baseurl,
             enabled        => $puppetrepo_source_enabled,
             failovermethod => $puppetrepo_source_failovermethod,
@@ -43,20 +43,20 @@ class puppetrepo (
             priority       => $puppetrepo_source_priority,
         }
 
-        file { '/etc/pki/rpm-gpg/RPM-GPG-KEY-puppet5':
+        file { '/etc/pki/rpm-gpg/RPM-GPG-KEY-puppet':
             ensure => present,
             owner  => 'root',
             group  => 'root',
             mode   => '0644',
-            source => 'puppet:///modules/puppetrepo/RPM-GPG-KEY-puppet5',
+            source => 'puppet:///modules/puppetrepo/RPM-GPG-KEY-puppet',
         }
 
-        puppetrepo::rpm_gpg_key { 'RPM-GPG-KEY-puppet5':
-            path   => '/etc/pki/rpm-gpg/RPM-GPG-KEY-puppet5',
+        puppetrepo::rpm_gpg_key { 'RPM-GPG-KEY-puppet':
+            path   => '/etc/pki/rpm-gpg/RPM-GPG-KEY-puppet',
         }
 
     } else {
-        notice ("No Puppet Labs PC1 repository available for ${::operatingsystem}")
+        notice ("No Puppet Labs repository available for ${::operatingsystem}")
     }
 
 }
