@@ -21,10 +21,10 @@ class puppetrepo (
 
 ) inherits puppetrepo::params {
 
-    if $::osfamily == 'RedHat' and $::operatingsystem !~ /Fedora|Amazon/ {
+    if $facts['os']['family'] == 'RedHat' and $facts['os']['name'] !~ /Fedora|Amazon/ {
 
         yumrepo { 'puppet':
-            descr          => "Puppet Repository el ${::operatingsystemmajrelease} - \$basearch",
+            descr          => "Puppet Repository el ${facts['os']['release']['major']} - \$basearch",
             baseurl        => $puppetrepo_baseurl,
             enabled        => $puppetrepo_enabled,
             failovermethod => $puppetrepo_failovermethod,
@@ -34,7 +34,7 @@ class puppetrepo (
         }
 
         yumrepo { 'puppet-source':
-            descr          => "Puppet Repository el ${::operatingsystemmajrelease} - Source",
+            descr          => "Puppet Repository el ${facts['os']['release']['major']} - Source",
             baseurl        => $puppetrepo_source_baseurl,
             enabled        => $puppetrepo_source_enabled,
             failovermethod => $puppetrepo_source_failovermethod,
@@ -56,7 +56,7 @@ class puppetrepo (
         }
 
     } else {
-        notice ("No Puppet Labs repository available for ${::operatingsystem}")
+        notice ("No Puppet Labs repository available for ${facts['os']['name']}")
     }
 
 }
